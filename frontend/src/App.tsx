@@ -4,6 +4,21 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from './components/ui/button';
 import { Toaster } from './components/ui/sonner';
+import { cn } from './lib/utils';
+
+const testImages = [
+	'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Udon_Thani_-_The_City_Pillar_Shrine_-_0002.jpg/1280px-Udon_Thani_-_The_City_Pillar_Shrine_-_0002.jpg',
+	'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Udon_Thani_-_The_City_Pillar_Shrine_-_0002.jpg/1280px-Udon_Thani_-_The_City_Pillar_Shrine_-_0002.jpg',
+	'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Udon_Thani_-_The_City_Pillar_Shrine_-_0002.jpg/1280px-Udon_Thani_-_The_City_Pillar_Shrine_-_0002.jpg',
+	'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Udon_Thani_-_The_City_Pillar_Shrine_-_0002.jpg/1280px-Udon_Thani_-_The_City_Pillar_Shrine_-_0002.jpg',
+];
+
+const testVideos = [
+	'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+	'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+	'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+	'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+];
 
 function App() {
 	const [imageFile, setImageFile] = useState<File | null>(null);
@@ -64,19 +79,19 @@ function App() {
 	};
 
 	return (
-		<main className="pb-32 overflow-x-auto mx-auto px-6 md:px-8 pt-6 lg:pt-12 flex flex-col items-center min-h-screen max-w-4xl space-y-4">
+		<main className="pb-32 overflow-x-auto mx-auto px-6 md:px-8 pt-6 lg:pt-12 flex flex-col min-h-screen max-w-4xl space-y-4">
 			<h1 className="font-roboto-mono scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl text-center md:mb-6">
 				Media Vault
 			</h1>
 
-			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full">
+			<div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full mb-6">
 				{/* Image Upload Card */}
 
 				<form className="grid grid-cols-1 gap-4 w-full">
 					<label
 						tabIndex={0}
 						htmlFor="imageInput"
-						className="border-2 border-dashed p-6 flex flex-col items-center justify-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-xl h-48"
+						className="border-2 border-dashed p-6 flex flex-col items-center justify-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-xl h-[228px]"
 					>
 						<input
 							tabIndex={-1}
@@ -111,7 +126,7 @@ function App() {
 					<label
 						tabIndex={0}
 						htmlFor="videoInput"
-						className="border-2 border-border border-dashed p-6 flex flex-col items-center justify-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-xl h-48"
+						className="border-2 border-border border-dashed p-6 flex flex-col items-center justify-center cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-xl h-[228px]"
 					>
 						<input
 							tabIndex={-1}
@@ -140,6 +155,58 @@ function App() {
 						{isVideoUploading ? <Loader className="animate-spin" /> : 'Upload'}
 					</Button>
 				</form>
+			</div>
+
+			<h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+				Images
+			</h2>
+
+			<div
+				className={cn(
+					'grid gap-4 md:gap-6 w-full mb-6',
+					testImages.length > 0 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'
+				)}
+			>
+				{testImages.length > 0 ? (
+					testImages.map((image, i) => (
+						<img
+							key={i}
+							src={image}
+							alt={`Uploaded image ${i}`}
+							className="w-full h-[228px] object-cover rounded-md"
+						/>
+					))
+				) : (
+					<p className="w-full text-muted-foreground text-center">
+						No images uploaded yet.
+					</p>
+				)}
+			</div>
+
+			<h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+				Videos
+			</h2>
+
+			<div
+				className={cn(
+					'grid gap-4 md:gap-6 w-full mb-6',
+					testVideos.length > 0 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1'
+				)}
+			>
+				{testVideos.length > 0 ? (
+					testVideos.map((video, i) => (
+						<video
+							key={i}
+							src={video}
+							controls
+							className="w-full h-[228px] rounded-md"
+						/>
+					))
+				) : (
+					<p className="w-full text-muted-foreground text-center">
+						No videos uploaded yet.
+					</p>
+				)}
 			</div>
 
 			<Toaster />
