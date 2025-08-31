@@ -7,9 +7,12 @@ interface ImagesListProps {
 	images: string[] | undefined;
 	isLoading: boolean;
 	isError: Error | null;
+	isFetching: boolean;
 }
 
-const ImagesList = ({ images, isLoading, isError }: ImagesListProps) => {
+const ImagesList = ({ images, isLoading, isError, isFetching }: ImagesListProps) => {
+	const showSkeletons = isLoading || isFetching;
+
 	return (
 		<>
 			<TypographyH2>Images</TypographyH2>
@@ -17,7 +20,7 @@ const ImagesList = ({ images, isLoading, isError }: ImagesListProps) => {
 			<div
 				className={cn(
 					'grid gap-4 md:gap-6 w-full mb-6',
-					(isLoading || (images && images.length > 0)) && !isError
+					(showSkeletons || (images && images.length > 0)) && !isError
 						? 'grid-cols-1 md:grid-cols-2'
 						: 'grid-cols-1'
 				)}
@@ -27,7 +30,7 @@ const ImagesList = ({ images, isLoading, isError }: ImagesListProps) => {
 						message="Failed to load images. Please try again later."
 						destructive
 					/>
-				) : isLoading ? (
+				) : showSkeletons ? (
 					<ListSkeletons />
 				) : images && images.length > 0 ? (
 					images.map((image, i) => (

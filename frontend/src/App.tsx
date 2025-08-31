@@ -22,13 +22,23 @@ function App() {
 		data: images,
 		error: imageError,
 		isLoading: isImageLoading,
-	} = useQuery<string[]>({ queryKey: ['images'], queryFn: getImages });
+		isFetching: isImageFetching,
+	} = useQuery<string[]>({
+		queryKey: ['images'],
+		queryFn: getImages,
+		refetchInterval: 1_000 * 60 * 10, // 10 minutes
+	});
 
 	const {
 		data: videos,
 		error: videoError,
 		isLoading: isVideoLoading,
-	} = useQuery<string[]>({ queryKey: ['videos'], queryFn: getVideos });
+		isFetching: isVideoFetching,
+	} = useQuery<string[]>({
+		queryKey: ['videos'],
+		queryFn: getVideos,
+		refetchInterval: 1_000 * 60 * 10, // 10 minutes
+	});
 
 	return (
 		<main className="pb-32 overflow-x-auto mx-auto px-6 md:px-8 pt-6 lg:pt-12 flex flex-col min-h-screen max-w-4xl space-y-4">
@@ -38,9 +48,19 @@ function App() {
 
 			<UploadCards />
 
-			<ImagesList images={images} isLoading={isImageLoading} isError={imageError} />
+			<ImagesList
+				images={images}
+				isLoading={isImageLoading}
+				isError={imageError}
+				isFetching={isImageFetching}
+			/>
 
-			<VideosList videos={videos} isLoading={isVideoLoading} isError={videoError} />
+			<VideosList
+				videos={videos}
+				isLoading={isVideoLoading}
+				isError={videoError}
+				isFetching={isVideoFetching}
+			/>
 
 			<Toaster />
 		</main>

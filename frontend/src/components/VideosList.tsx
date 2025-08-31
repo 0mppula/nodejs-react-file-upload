@@ -7,9 +7,12 @@ interface VideosListProps {
 	videos: string[] | undefined;
 	isLoading: boolean;
 	isError: Error | null;
+	isFetching: boolean;
 }
 
-const VideosList = ({ videos, isLoading, isError }: VideosListProps) => {
+const VideosList = ({ videos, isLoading, isError, isFetching }: VideosListProps) => {
+	const showSkeletons = isLoading || isFetching;
+
 	return (
 		<>
 			<TypographyH2>Videos</TypographyH2>
@@ -17,7 +20,7 @@ const VideosList = ({ videos, isLoading, isError }: VideosListProps) => {
 			<div
 				className={cn(
 					'grid gap-4 md:gap-6 w-full mb-6',
-					(isLoading || (videos && videos.length > 0)) && !isError
+					(showSkeletons || (videos && videos.length > 0)) && !isError
 						? 'grid-cols-1 md:grid-cols-2'
 						: 'grid-cols-1'
 				)}
@@ -27,7 +30,7 @@ const VideosList = ({ videos, isLoading, isError }: VideosListProps) => {
 						message="Failed to load videos. Please try again later."
 						destructive
 					/>
-				) : isLoading ? (
+				) : showSkeletons ? (
 					<ListSkeletons />
 				) : videos && videos.length > 0 ? (
 					videos.map((video, i) => (
