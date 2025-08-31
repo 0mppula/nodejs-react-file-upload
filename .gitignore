@@ -1,3 +1,10 @@
+# Backend
 backend/.env
 backend/node_modules
 backend/uploads
+
+# Frontend
+frontend/node_modules
+
+# Misc
+.vscode/
