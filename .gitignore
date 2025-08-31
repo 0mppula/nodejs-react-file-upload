@@ -5,6 +5,8 @@ backend/uploads
 
 # Frontend
 frontend/node_modules
+frontend/.env
 
 # Misc
+node_modules/
 .vscode/

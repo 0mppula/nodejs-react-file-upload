@@ -25,10 +25,7 @@ const getImages = (req, res) => {
 		const baseUrl = `${req.protocol}://${req.get('host')}/uploads/images/`;
 		const imageUrls = images.map((file) => baseUrl + file);
 
-		res.status(200).json({
-			count: imageUrls.length,
-			images: imageUrls,
-		});
+		res.status(200).json(imageUrls);
 	});
 };
 

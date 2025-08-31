@@ -25,10 +25,7 @@ const getVideos = (req, res) => {
 		const baseUrl = `${req.protocol}://${req.get('host')}/uploads/videos/`;
 		const videoUrls = videos.map((file) => baseUrl + file);
 
-		res.status(200).json({
-			count: videoUrls.length,
-			videos: videoUrls,
-		});
+		res.status(200).json(videoUrls);
 	});
 };
 
